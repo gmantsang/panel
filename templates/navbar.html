@@ -1,5 +1,24 @@
-<nav>
-    <div>
-        <strong>dabbot</strong>
+<nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">dabBot</a>
+    <div class="container">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/">home</a>
+            </li>
+        </ul>
+        {% if authed %}
+        <span class="nav-text dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ username }}#{{ discrim }}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="/logout">logout</a>
+            </div>
+        </span>
+        {% else %}
+        <span class="nav-text">
+            <a class="nav-link" href="/link/discord">login with discord</a>
+        </span>
+        {% endif %}
     </div>
 </nav>
