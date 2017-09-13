@@ -1,0 +1,11 @@
+<html lang="en">
+<head>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    {% include "navbar.html" %}
+    <section class="container">
+        {% block content %}{% endblock %}
+    </section>
+</body>
+</html>
