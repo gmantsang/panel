@@ -24,7 +24,15 @@ func BuildRouter(r *mux.Router, c Config) error {
 		Store:    store,
 		Template: templates.Index,
 	})
-	r.Handle("/link/discord", nil)
+	r.Handle("/link/discord", &handlers.LinkHandler{
+		Store:        store,
+		ClientID:     c.ClientID,
+		ClientSecret: c.ClientSecret,
+	})
+	r.Handle("/logout", &handlers.LogoutHandler{
+		Store: store,
+	})
+
 	r.Handle("/manage/radios", nil)
 
 	return nil

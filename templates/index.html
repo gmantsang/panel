@@ -2,4 +2,9 @@
 {% block title %}Home{% endblock %}
 {% block content %}
 <h1>dabBot manager</h1>
+{% if authed %}
+    <h3>hi you're logged in as {{ username }}#{{ discrim }}</h3>
+{% else %}
+    <h3>please <a href="/link/discord">login</a></h3>
+{% endif %}
 {% endblock %}

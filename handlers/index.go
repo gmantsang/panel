@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/flosch/pongo2"
@@ -15,8 +14,21 @@ type IndexHandler struct {
 }
 
 func (handler *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	err := handler.Template.ExecuteWriter(nil, w)
+
+	session, err := handler.Store.Get(r, SessionName)
 	if err != nil {
-		http.Error(w, fmt.Sprintf(TemplateFailed, err), http.StatusInternalServerError)
+		http.Error(w, SessionFailed(err), http.StatusInternalServerError)
+	}
+
+	ctx := pongo2.Context{}
+	if session.Values["authed"] == "true" {
+		ctx["authed"] = true
+		ctx["username"] = session.Values["username"]
+		ctx["discrim"] = session.Values["discrim"]
+	}
+
+	err = handler.Template.ExecuteWriter(ctx, w)
+	if err != nil {
+		http.Error(w, TemplateFailed(err), http.StatusInternalServerError)
 	}
 }
