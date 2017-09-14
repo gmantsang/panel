@@ -3,13 +3,14 @@ package server
 import (
 	"net/http"
 
+	"github.com/dabbotorg/panel/config"
 	"github.com/dabbotorg/panel/handlers"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 )
 
 // BuildRouter adds this website's routes
-func BuildRouter(r *mux.Router, c Config) error {
+func BuildRouter(r *mux.Router, c config.Config) error {
 
 	store := sessions.NewCookieStore([]byte(c.Secret))
 	templates, err := CompileTemplates()
@@ -33,7 +34,17 @@ func BuildRouter(r *mux.Router, c Config) error {
 		Store: store,
 	})
 
-	r.Handle("/manage/radios", nil)
+	r.Handle("/radios/{action}", &handlers.AuthorizedMiddleware{
+		MinLevel: 1,
+		Store:    store,
+		Config:   c,
+		Handler: &handlers.RadioHandler{
+			Store:        store,
+			Config:       c,
+			ListTemplate: templates.RadioList,
+			EditTemplate: templates.RadioEdit,
+		},
+	})
 
 	return nil
 }

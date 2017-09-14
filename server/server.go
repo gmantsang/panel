@@ -1,10 +1,14 @@
 package server
 
-import "net/http"
-import "github.com/gorilla/mux"
+import (
+	"net/http"
+
+	"github.com/dabbotorg/panel/config"
+	"github.com/gorilla/mux"
+)
 
 // Serve the panel
-func Serve(c Config) error {
+func Serve(c config.Config) error {
 
 	router := mux.NewRouter()
 	err := BuildRouter(router, c)

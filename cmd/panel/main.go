@@ -4,10 +4,11 @@ import (
 	"log"
 
 	"github.com/BurntSushi/toml"
+	"github.com/dabbotorg/panel/config"
 	"github.com/dabbotorg/panel/server"
 )
 
-var conf server.Config
+var conf config.Config
 
 func init() {
 	_, err := toml.DecodeFile("config.toml", &conf)

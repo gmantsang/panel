@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Radio List{% endblock %}
+{% block content %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>URL</th>
+            <th>Category</th>
+            <th>Genre</th>
+            <th>Country</th>
+            <th>Last Tested</th>
+            <th>State</th>
+        </tr>
+    </thead>
+{% for radio in radios %}
+    <tr>
+        <th scope="row">{{ radio.ID }}</th>
+        <td>{{ radio.Name }}</td>
+        <td>{{ radio.URL }}</td>
+        <td>{{ radio.Category }}</td>
+        <td>{{ radio.Genre }}</td>
+        <td>{{ radio.Country }}</td>
+        <td>{{ radio.LastTested }}</td>
+        <td>{{ radio.State }}</td>
+    </tr>
+{% endfor %}
+</table>
+{% endblock %}

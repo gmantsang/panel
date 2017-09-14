@@ -9,12 +9,17 @@ const (
 	discordErrorFormat        = "Discord sent back an error: %s"
 	ioErrorFormat             = "Failed to read request body: %s"
 	jsonErrorFormat           = "Failed to unmarshal JSON: %s"
+	apiErrorFormat            = "Failed to query radio-api: %s"
 	discordURLFormat          = "https://discordapp.com/api/oauth2/authorize?client_id=%s&scope=identify&response_type=code"
 	tokenURLFormat            = "https://discordapp.com/api/oauth2/token?grant_type=authorization_code&client_id=%s&client_secret=%s&code=%s"
+	listRadiosFormat          = "%s/radios?limit=%s&offset=%s&state=%s"
+	getRadioFormat            = "%s/radios/%s"
 	// SessionName refers to the name of the session
 	SessionName = "discord"
 	// DiscordMeURL refers to the API endpoint for Discord user data
 	DiscordMeURL = "https://discordapp.com/api/v6/users/@me"
+	// NotAuthorized is returned when a user tries to access a page they don't have the permissions for
+	NotAuthorized = "You are not permitted to view this page."
 )
 
 // TemplateFailed is returned when a template fails to parse
@@ -47,6 +52,11 @@ func JSONError(e error) string {
 	return fmt.Sprintf(jsonErrorFormat, e)
 }
 
+// APIError is returned when the dab-radio API returns an error
+func APIError(e error) string {
+	return fmt.Sprintf(apiErrorFormat, e)
+}
+
 // DiscordAuthURL returns the authentication URL
 func DiscordAuthURL(clientID string) string {
 	return fmt.Sprintf(discordURLFormat, clientID)
@@ -55,4 +65,14 @@ func DiscordAuthURL(clientID string) string {
 // DiscordTokenURL returns the token url
 func DiscordTokenURL(clientID string, clientSecret string, code string) string {
 	return fmt.Sprintf(tokenURLFormat, clientID, clientSecret, code)
+}
+
+// ListRadiosURL returns the URL to query for radios with a given state
+func ListRadiosURL(apiBase string, limit string, offset string, state string) string {
+	return fmt.Sprintf(listRadiosFormat, apiBase, limit, offset, state)
+}
+
+// GetRadioURL returns the URL to query a radio
+func GetRadioURL(apiBase string, name string) string {
+	return fmt.Sprintf(getRadioFormat, apiBase, name)
 }

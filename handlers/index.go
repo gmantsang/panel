@@ -21,11 +21,7 @@ func (handler *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := pongo2.Context{}
-	if session.Values["authed"] == "true" {
-		ctx["authed"] = true
-		ctx["username"] = session.Values["username"]
-		ctx["discrim"] = session.Values["discrim"]
-	}
+	addAuthContext(session, ctx)
 
 	err = handler.Template.ExecuteWriter(ctx, w)
 	if err != nil {

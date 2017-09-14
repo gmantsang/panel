@@ -22,6 +22,7 @@ type (
 		Refresh string `json:"refresh_token"`
 	}
 	userResponse struct {
+		ID            string `json:"id"`
 		Username      string `json:"username"`
 		Discriminator string `json:"discriminator"`
 		Avatar        string `json:"avatar_id"`
@@ -106,6 +107,7 @@ func (handler *LinkHandler) HandleCallback(w http.ResponseWriter, r *http.Reques
 	session.Values["access_token"] = tokenData.Token
 	session.Values["refresh_token"] = tokenData.Refresh
 	session.Values["authed"] = "true"
+	session.Values["id"] = userData.ID
 	session.Values["username"] = userData.Username
 	session.Values["discrim"] = userData.Discriminator
 
