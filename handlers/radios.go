@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"math"
 	"net/http"
 	"path"
@@ -179,7 +178,6 @@ func (handler *RadioHandler) DoEditRadio(w http.ResponseWriter, r *http.Request,
 		http.Error(w, JSONError(err), http.StatusInternalServerError)
 		return
 	}
-	log.Println(string(buf))
 
 	url := GetRadioURL(handler.Config.APIUrl, name)
 	reader := bytes.NewReader(buf)
@@ -195,7 +193,6 @@ func (handler *RadioHandler) DoEditRadio(w http.ResponseWriter, r *http.Request,
 		http.Error(w, APIError(err), http.StatusInternalServerError)
 		return
 	}
-	log.Println(resp.StatusCode)
 
 	http.Redirect(w, r, "/radios/list", http.StatusTemporaryRedirect)
 }

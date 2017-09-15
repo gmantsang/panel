@@ -24,6 +24,7 @@
         <td>{{ radio.Country }}</td>
         <td>{{ radio.LastTested }}</td>
         <td>{{ radio.State }}</td>
+        <td><a class="btn" href="/radios/edit?name={{ radio.Name }}" role="button">Edit</a>
     </tr>
 {% endfor %}
 </table>
