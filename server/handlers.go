@@ -1,10 +1,13 @@
 package server
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/dabbotorg/panel/config"
 	"github.com/dabbotorg/panel/handlers"
+	"github.com/dabbotorg/panel/handlers/auth"
+	"github.com/dabbotorg/panel/handlers/radios"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 )
@@ -25,26 +28,24 @@ func BuildRouter(r *mux.Router, c config.Config) error {
 		Store:    store,
 		Template: templates.Index,
 	})
-	r.Handle("/link/discord", &handlers.LinkHandler{
+
+	authHandler := &auth.Handler{
 		Store:        store,
 		ClientID:     c.ClientID,
 		ClientSecret: c.ClientSecret,
-	})
-	r.Handle("/logout", &handlers.LogoutHandler{
-		Store: store,
-	})
+	}
+	authHandler.BuildRouter(r)
 
-	r.Handle("/radios/{action}", &handlers.AuthorizedMiddleware{
-		MinLevel: 1,
-		Store:    store,
-		Config:   c,
-		Handler: &handlers.RadioHandler{
-			Store:        store,
-			Config:       c,
-			ListTemplate: templates.RadioList,
-			EditTemplate: templates.RadioEdit,
-		},
-	})
+	radioTemplates, err := radios.CompileTemplates()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	radioHandler := &radios.Handler{
+		Store:     store,
+		Config:    c,
+		Templates: radioTemplates,
+	}
+	radioHandler.BuildRouter(r)
 
 	return nil
 }

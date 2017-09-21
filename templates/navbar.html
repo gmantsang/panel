@@ -6,13 +6,13 @@
                 <a class="nav-link" href="/">home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/radios/list">radio list</a>
+                <a class="nav-link" href="/radios/list/valid">radio list</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/radios/escrow">radios in escrow</a>
+                <a class="nav-link" href="/radios/list/escrow">radios in escrow</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/radios/broken">broken radios</a>
+                <a class="nav-link" href="/radios/list/broken">broken radios</a>
             </li>
         </ul>
         {% if authed %}
@@ -21,7 +21,7 @@
                 {{ username }}#{{ discrim }}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="/logout">logout</a>
+                <a class="dropdown-item" href="/link/logout">logout</a>
             </div>
         </span>
         {% else %}

@@ -1,7 +1,7 @@
-{% extends "base.html" %}
+{% extends "../base.html" %}
 {% block title %}Radio Edit{% endblock %}
 {% block content %}
-<form method="POST" action="/radios/edit?name={{ radio.Name }}">
+<form method="POST" action="/radios/edit/{{ radio.Name }}">
     <div class="form-group">
         <label for="radioName">Display Name</label>
         <input type="text" class="form-control" id="radioName" name="Name" value="{{ radio.Name }}">
