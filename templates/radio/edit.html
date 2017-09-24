@@ -47,7 +47,7 @@
                 <select class="select" name="Country">
                     {% for c in countries %}
                     <option value="{{c}}"
-                        {% if radio.State == c %}selected{% endif %}>
+                        {% if radio.Country == c %}selected{% endif %}>
                         {{c}}
                     </option>
                     {% endfor %}
