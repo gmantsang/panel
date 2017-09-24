@@ -15,6 +15,7 @@ const (
 	discordURLFormat          = "https://discordapp.com/api/oauth2/authorize?client_id=%s&scope=identify&response_type=code"
 	tokenURLFormat            = "https://discordapp.com/api/oauth2/token?grant_type=authorization_code&client_id=%s&client_secret=%s&code=%s"
 	listRadiosFormat          = "%s/radios?limit=%s&offset=%s&state=%s"
+	createRadiosFormat        = "%s/radios"
 	getRadioFormat            = "%s/radios/%s"
 	// SessionName refers to the name of the session
 	SessionName = "discord"
@@ -83,6 +84,11 @@ func DiscordTokenURL(clientID string, clientSecret string, code string) string {
 // ListRadiosURL returns the URL to query for radios with a given state
 func ListRadiosURL(apiBase string, limit string, offset string, state string) string {
 	return fmt.Sprintf(listRadiosFormat, apiBase, limit, offset, state)
+}
+
+// CreateRadiosURL returns the URL to create a station
+func CreateRadiosURL(apiBase string) string {
+	return fmt.Sprintf(createRadiosFormat, apiBase)
 }
 
 // GetRadioURL returns the URL to query a radio

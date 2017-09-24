@@ -31,6 +31,15 @@ func (handler *Handler) BuildRouter(router *mux.Router) {
 		HandlerFunc: handler.Edit,
 	}).Methods(http.MethodPost)
 
+	r.HandleFunc("/create/", handler.ViewCreate).
+		Methods(http.MethodGet)
+	r.Handle("/create/", &utils.AuthorizedMiddleware{
+		Config:      handler.Config,
+		MinLevel:    5,
+		Form:        true,
+		HandlerFunc: handler.Create,
+	}).Methods(http.MethodPost)
+
 	r.HandleFunc("/delete/{name}", handler.ViewDelete).
 		Methods(http.MethodGet)
 	r.Handle("/delete/{name}", &utils.AuthorizedMiddleware{

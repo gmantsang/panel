@@ -12,13 +12,15 @@
                 <a class="navbar-item" href="/radios/list/valid">Valid</a>
                 <a class="navbar-item" href="/radios/list/escrow">Escrow</a>
                 <a class="navbar-item" href="/radios/list/broken">Broken</a>
+                <hr />
+                <a class="navbar-item" href="/radios/create/"><i class="fa fa-plus"></i>&nbsp;Add Radio</a>
             </div>
         </div>
         
         <div class="navbar-end">
             {% if authed %}
             <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-item">{{username}}#{{discrim}}</a>
+                <a class="navbar-link">{{username}}#{{discrim}}</a>
 
                 <div class="navbar-dropdown is-right">
                     <a class="navbar-item" href="/link/logout">Logout</a>

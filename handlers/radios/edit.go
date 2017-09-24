@@ -39,6 +39,7 @@ func (handler *Handler) ViewEdit(w http.ResponseWriter, r *http.Request) {
 
 	ctx := pongo2.Context{}
 	ctx["radio"] = radios[0]
+	ctx["action"] = "edit"
 
 	session, err := handler.Store.Get(r, utils.SessionName)
 	if err != nil {
@@ -60,16 +61,13 @@ func (handler *Handler) Edit(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
-
-	radio := api.Radio{
-		Name:       r.Form.Get("Name"),
-		URL:        r.Form.Get("URL"),
-		Category:   r.Form.Get("Category"),
-		Genre:      r.Form.Get("Genre"),
-		Country:    r.Form.Get("Country"),
-		LastTested: r.Form.Get("LastTested"),
-		State:      r.Form.Get("State"),
+	radio := parseForm(r)
+	ok, reason := isValid(radio)
+	if !ok {
+		http.Error(w, reason, http.StatusBadRequest)
+		return
 	}
 
 	buf, err := json.Marshal(radio)
@@ -90,4 +88,41 @@ func (handler *Handler) Edit(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.Redirect(w, r, "/radios/list/valid", http.StatusTemporaryRedirect)
+}
+
+func parseForm(r *http.Request) api.Radio {
+	return api.Radio{
+		Name:       r.Form.Get("Name"),
+		URL:        r.Form.Get("URL"),
+		Category:   r.Form.Get("Category"),
+		Genre:      r.Form.Get("Genre"),
+		Country:    r.Form.Get("Country"),
+		LastTested: r.Form.Get("LastTested"),
+		State:      r.Form.Get("State"),
+	}
+}
+
+func isValid(r api.Radio) (bool, string) {
+	if r.Name == "" {
+		return false, "name"
+	}
+	if r.URL == "" {
+		return false, "url"
+	}
+	if r.Category == "" {
+		return false, "category"
+	}
+	if r.Genre == "" {
+		return false, "genre"
+	}
+	if r.Country == "" {
+		return false, "country"
+	}
+	if r.LastTested == "" {
+		return false, "last_tested"
+	}
+	if r.State == "" {
+		return false, "state"
+	}
+	return true, ""
 }

@@ -1,7 +1,7 @@
 {% extends "../base.html" %}
-{% block title %}Radio Edit{% endblock %}
+{% block title %}Radio {{action}}{% endblock %}
 {% block content %}
-<form method="POST" action="/radios/edit/{{ radio.Name }}" class="container">
+<form method="POST" action="/radios/{{action}}/{{radio.Name}}" class="container">
     <div class="field">
         <label class="label">Display Name</label>
         <div class="control">
@@ -44,9 +44,18 @@
         <label class="label">State</label>
         <div class="control">
             <select class="select" name="State">
-                <option value="VALID" {% if radio.State == "VALID" %}selected{% endif %}>Valid</option>
-                <option value="ESCROW" {% if radio.State == "ESCROW" %}selected{% endif %}>Escrow</option>
-                <option value="BROKEN" {% if radio.State == "BROKEN" %}selected{% endif %}>Broken</option>
+                <option value="VALID"
+                    {% if radio.State == "VALID" %}selected{% endif %}
+                    {% if !admin %}disabled{% endif%}>
+                    Valid</option>
+                <option value="ESCROW"
+                    {% if radio.State == "ESCROW" %}selected{% endif %}
+                    {% if !admin %}disabled{% endif%}>
+                    Escrow</option>
+                <option value="BROKEN"
+                    {% if radio.State == "BROKEN" %}selected{% endif %}
+                    {% if !admin %}disabled{% endif%}>
+                    Broken</option>
             </select>
         </div>
     </div>
