@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"path"
+	"strings"
 
 	"github.com/dabbotorg/panel/handlers/utils"
 	"github.com/dabbotorg/radio-api/api"
@@ -36,6 +37,7 @@ func (handler *Handler) ViewEdit(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, utils.JSONError(err), http.StatusInternalServerError)
 		return
 	}
+	radios[0].LastTested = strings.Split(radios[0].LastTested, "T")[0]
 
 	ctx := pongo2.Context{}
 	ctx["radio"] = radios[0]
