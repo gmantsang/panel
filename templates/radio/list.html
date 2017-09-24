@@ -1,31 +1,51 @@
 {% extends "../base.html" %}
 {% block title %}Radio List{% endblock %}
 {% block content %}
-<table class="table">
-    <thead>
+<div class="container">
+    <table class="table is-striped is-fullwidth">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>URL</th>
+                <th>Category</th>
+                <th>Genre</th>
+                <th>Country</th>
+                <th>Last Tested</th>
+                <th></th>
+            </tr>
+        </thead>
+        {% for radio in radios %}
         <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>URL</th>
-            <th>Category</th>
-            <th>Genre</th>
-            <th>Country</th>
-            <th>Last Tested</th>
-            <th>State</th>
+            <th scope="row">{{radio.ID}}</th>
+            <td>{{radio.Name}}</td>
+            <td>{{radio.URL}}</td>
+            <td>{{radio.Category}}</td>
+            <td>{{radio.Genre}}</td>
+            <td>{{radio.Country}}</td>
+            <td>{{radio.LastTested}}</td>
+            <td>
+                {% if authed %}
+                <a href="/radios/edit/{{radio.Name}}" class="is-primary"><i class="fa fa-pencil"></i></a>
+                {% endif %}
+                {% if admin %}
+                    {% if radio.State == "VALID" %}
+                    <a href="/radios/break/{{radio.Name}}" class="is-warning"><i class="fa fa-flag"></i></a>
+                    {% elif radio.State == "ESCROW" %}
+                    <a href="/radios/valid/{{radio.Name}}" class="is-success"><i class="fa fa-thumbs-up"></i></a>
+                    {% endif %}
+                    <a href="/radios/delete/{{radio.Name}}" class="is-danger"><i class="fa fa-trash"></i></a>
+                {% endif %}
+            </td>
         </tr>
-    </thead>
-{% for radio in radios %}
-    <tr>
-        <th scope="row">{{ radio.ID }}</th>
-        <td>{{ radio.Name }}</td>
-        <td>{{ radio.URL }}</td>
-        <td>{{ radio.Category }}</td>
-        <td>{{ radio.Genre }}</td>
-        <td>{{ radio.Country }}</td>
-        <td>{{ radio.LastTested }}</td>
-        <td>{{ radio.State }}</td>
-        <td><a class="btn" href="/radios/edit/{{ radio.Name }}" role="button">Edit</a>
-    </tr>
-{% endfor %}
-</table>
-{% endblock %}
+        {% endfor %}
+    </table>
+    <div class="container has-text-centered">
+        <a class="pagination-previous" {% if page == 1 %}disabled{% endif %}>Previous</a>
+        <p>Page <b>{{page}}</b> of <b>{{pages}}</b></p>
+        <a class="pagination-next" {% if page == pages %}disabled{% endif %}>Next</a>
+        <br/>
+        <p class="is-small">{{total}} radios in query</p>
+    </div>
+</div>
+    {% endblock %}

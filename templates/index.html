@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<h1>dabBot manager</h1>
-{% if authed %}
-    <h3>hi you're logged in as {{ username }}#{{ discrim }}</h3>
-{% else %}
-    <h3>please <a href="/link/discord">login</a></h3>
-{% endif %}
+<div class="container">
+    <h1>dabBot staff panel</h1>
+    {% if authed %}
+        <h3>hi you're logged in as {{ username }}#{{ discrim }}</h3>
+    {% else %}
+        <h3>please <a href="/link/discord">login</a></h3>
+    {% endif %}
+</div>
 {% endblock %}

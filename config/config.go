@@ -10,6 +10,7 @@ type (
 		ClientID     string
 		ClientSecret string
 		Permissions  []Permission
+		Debug        bool
 	}
 
 	// Permission represents the permission levels for a user

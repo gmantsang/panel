@@ -1,34 +1,54 @@
 {% extends "../base.html" %}
 {% block title %}Radio Edit{% endblock %}
 {% block content %}
-<form method="POST" action="/radios/edit/{{ radio.Name }}">
-    <div class="form-group">
-        <label for="radioName">Display Name</label>
-        <input type="text" class="form-control" id="radioName" name="Name" value="{{ radio.Name }}">
+<form method="POST" action="/radios/edit/{{ radio.Name }}" class="container">
+    <div class="field">
+        <label class="label">Display Name</label>
+        <div class="control">
+            <input type="text" class="input" name="Name" value="{{ radio.Name }}">
+        </div>
     </div>
-    <div class="form-group">
-        <label for="radioUrl">Stream URL</label>
-        <input type="url" class="form-control" id="radioUrl" name="URL" value="{{ radio.URL }}">
+    <div class="field">
+        <label class="label">Stream URL</label>
+        <div class="control">
+            <input type="url" class="input" name="URL" value="{{ radio.URL }}">
+        </div>
     </div>
-    <div class="form-group">
-        <label for="radioCategory">Category</label>
-        <input type="text" class="form-control" id="radioCategory" name="Category" value="{{ radio.Category }}">
+    <div class="row">
+        <div class="col field">
+            <label class="label">Category</label>
+            <div class="control">
+                <input type="text" class="input" name="Category" value="{{ radio.Category }}">
+            </div>
+        </div>
+        <div class="col field">
+            <label class="label">Genre</label>
+            <div class="control">
+                <input type="text" class="input" name="Genre" value="{{ radio.Genre }}">
+            </div>
+        </div>
+        <div class="col field">
+            <label class="label">Country</label>
+            <div class="control">
+                <input type="text" class="input" name="Country" value="{{ radio.Country }}">
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="radioGenre">Genre</label>
-        <input type="text" class="form-control" id="radioGenre" name="Genre" value="{{ radio.Genre }}">
+    <div class="field">
+        <label class="label">Last Tested</label>
+        <div class="control">
+            <input type="datetime" class="input" name="LastTested" value="{{ radio.LastTested }}">
+        </div>
     </div>
-    <div class="form-group">
-        <label for="radioCountry">Country</label>
-        <input type="text" class="form-control" id="radioCountry" name="Country" value="{{ radio.Country }}">
-    </div>
-    <div class="form-group">
-        <label for="radioLastTested">Last Tested</label>
-        <input type="datetime" class="form-control" id="radioLastTested" name="LastTested" value="{{ radio.LastTested }}">
-    </div>
-    <div class="form-group">
-        <label for="radioState">State</label>
-        <input type="text" class="form-control" id="radioState" name="State" value="{{ radio.State }}">
+    <div class="field">
+        <label class="label">State</label>
+        <div class="control">
+            <select class="select" name="State">
+                <option value="VALID" {% if radio.State == "VALID" %}selected{% endif %}>Valid</option>
+                <option value="ESCROW" {% if radio.State == "ESCROW" %}selected{% endif %}>Escrow</option>
+                <option value="BROKEN" {% if radio.State == "BROKEN" %}selected{% endif %}>Broken</option>
+            </select>
+        </div>
     </div>
     <input type="submit" value="Save">
 </form>

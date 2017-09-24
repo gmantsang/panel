@@ -45,7 +45,7 @@ func (handler *Handler) ViewEdit(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, utils.SessionFailed(err), http.StatusInternalServerError)
 		return
 	}
-	utils.AddAuthContext(session, ctx)
+	utils.AddAuthContext(session, ctx, handler.Config)
 
 	err = handler.Templates.Edit.ExecuteWriter(ctx, w)
 	if err != nil {

@@ -48,7 +48,7 @@ func (handler *Handler) ViewList(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var radios []api.Radio
+	var radios api.RadioList
 	err = json.Unmarshal(buf, &radios)
 	if err != nil {
 		http.Error(w, utils.JSONError(err), http.StatusInternalServerError)
@@ -56,9 +56,11 @@ func (handler *Handler) ViewList(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := pongo2.Context{}
-	ctx["radios"] = radios
-	ctx["count"] = len(radios)
-	ctx["page"] = math.Floor(float64((offsetInt + 100)) / float64(100))
+	ctx["radios"] = radios.Radios
+	ctx["count"] = len(radios.Radios)
+	ctx["total"] = radios.Count
+	ctx["page"] = int32(math.Floor(float64(offsetInt+100) / float64(100)))
+	ctx["pages"] = int32(math.Floor(float64(radios.Count+100) / float64(100)))
 	ctx["state"] = state
 
 	session, err := handler.Store.Get(r, utils.SessionName)
@@ -66,7 +68,7 @@ func (handler *Handler) ViewList(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, utils.SessionFailed(err), http.StatusInternalServerError)
 		return
 	}
-	utils.AddAuthContext(session, ctx)
+	utils.AddAuthContext(session, ctx, handler.Config)
 
 	err = handler.Templates.List.ExecuteWriter(ctx, w)
 	if err != nil {

@@ -3,6 +3,7 @@ package handlers
 import (
 	"net/http"
 
+	"github.com/dabbotorg/panel/config"
 	"github.com/dabbotorg/panel/handlers/utils"
 	"github.com/flosch/pongo2"
 	"github.com/gorilla/sessions"
@@ -10,6 +11,7 @@ import (
 
 // IndexHandler handles /
 type IndexHandler struct {
+	Config   config.Config
 	Store    sessions.Store
 	Template *pongo2.Template
 }
@@ -22,7 +24,7 @@ func (handler *IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := pongo2.Context{}
-	utils.AddAuthContext(session, ctx)
+	utils.AddAuthContext(session, ctx, handler.Config)
 
 	err = handler.Template.ExecuteWriter(ctx, w)
 	if err != nil {

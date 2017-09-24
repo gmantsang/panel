@@ -27,6 +27,7 @@ func BuildRouter(r *mux.Router, c config.Config) error {
 	r.Handle("/", &handlers.IndexHandler{
 		Store:    store,
 		Template: templates.Index,
+		Config:   c,
 	})
 
 	authHandler := &auth.Handler{
@@ -46,6 +47,17 @@ func BuildRouter(r *mux.Router, c config.Config) error {
 		Templates: radioTemplates,
 	}
 	radioHandler.BuildRouter(r)
+
+	if c.Debug {
+		r.HandleFunc("/compile", func(w http.ResponseWriter, r *http.Request) {
+			radioTemplates, err = radios.CompileTemplates()
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			radioHandler.Templates = radioTemplates
+		})
+	}
 
 	return nil
 }

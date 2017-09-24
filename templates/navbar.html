@@ -1,33 +1,32 @@
-<nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">dabBot</a>
-    <div class="container">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/">home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/radios/list/valid">radio list</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/radios/list/escrow">radios in escrow</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/radios/list/broken">broken radios</a>
-            </li>
-        </ul>
-        {% if authed %}
-        <span class="nav-text dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ username }}#{{ discrim }}
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="/link/logout">logout</a>
+<nav class="navbar {% if authed %}is-black{% else %}is-danger{% endif %}" 
+    role="navigation" aria-label="main navigation">
+
+    <div class="navbar-brand">
+        <a class="navbar-item" href="/">dabBot</a>
+    </div>
+    <div class="navbar-menu">
+        <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">Radios</a>
+            
+            <div class="navbar-dropdown">
+                <a class="navbar-item" href="/radios/list/valid">Valid</a>
+                <a class="navbar-item" href="/radios/list/escrow">Escrow</a>
+                <a class="navbar-item" href="/radios/list/broken">Broken</a>
             </div>
-        </span>
-        {% else %}
-        <span class="nav-text">
-            <a class="nav-link" href="/link/discord">login with discord</a>
-        </span>
-        {% endif %}
+        </div>
+        
+        <div class="navbar-end">
+            {% if authed %}
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-item">{{username}}#{{discrim}}</a>
+
+                <div class="navbar-dropdown is-right">
+                    <a class="navbar-item" href="/link/logout">Logout</a>
+                </div>
+            </div>
+            {% else %}
+            <a class="navbar-item" href="/link/discord">Login with Discord</a>
+            {% endif %}
+        </div>
     </div>
 </nav>
