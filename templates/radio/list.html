@@ -23,7 +23,7 @@
             <td>{{radio.Category}}</td>
             <td>{{radio.Genre}}</td>
             <td>{{radio.Country}}</td>
-            <td>{{radio.LastTested}}</td>
+            <td><time>{{radio.LastTested | truncatechars:13 | cut:"."}}</time></td>
             <td>
                 {% if authed %}
                 <a href="/radios/edit/{{radio.Name}}" class="is-primary"><i class="fa fa-pencil"></i></a>
