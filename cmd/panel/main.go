@@ -9,9 +9,14 @@ import (
 )
 
 var conf config.Config
+var meta config.Metadata
 
 func init() {
 	_, err := toml.DecodeFile("config.toml", &conf)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	_, err = toml.DecodeFile("metadata.toml", &meta)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -19,6 +24,6 @@ func init() {
 
 func main() {
 	log.Println("panel up")
-	log.Println(server.Serve(conf))
+	log.Println(server.Serve(conf, meta))
 	log.Println("panel down")
 }

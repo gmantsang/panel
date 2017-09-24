@@ -36,3 +36,10 @@ func isAdmin(id interface{}, conf config.Config) bool {
 		return true
 	}
 }
+
+// AddMetaContext adds metadata info (cats, genres, countries) to the context
+func AddMetaContext(ctx pongo2.Context, meta config.Metadata) {
+	ctx["categories"] = meta.Categories
+	ctx["genres"] = meta.Genres
+	ctx["countries"] = meta.Countries
+}

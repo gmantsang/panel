@@ -13,7 +13,7 @@ import (
 )
 
 // BuildRouter adds this website's routes
-func BuildRouter(r *mux.Router, c config.Config) error {
+func BuildRouter(r *mux.Router, c config.Config, m config.Metadata) error {
 
 	store := sessions.NewCookieStore([]byte(c.Secret))
 	templates, err := CompileTemplates()
@@ -44,6 +44,7 @@ func BuildRouter(r *mux.Router, c config.Config) error {
 	radioHandler := &radios.Handler{
 		Store:     store,
 		Config:    c,
+		Meta:      m,
 		Templates: radioTemplates,
 	}
 	radioHandler.BuildRouter(r)

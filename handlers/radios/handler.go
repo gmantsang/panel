@@ -15,6 +15,7 @@ type Handler struct {
 	Store     sessions.Store
 	Templates *Templates
 	Config    config.Config
+	Meta      config.Metadata
 }
 
 // BuildRouter builds a subrouter for this controller

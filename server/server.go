@@ -8,10 +8,10 @@ import (
 )
 
 // Serve the panel
-func Serve(c config.Config) error {
+func Serve(c config.Config, m config.Metadata) error {
 
 	router := mux.NewRouter()
-	err := BuildRouter(router, c)
+	err := BuildRouter(router, c, m)
 	if err != nil {
 		return err
 	}

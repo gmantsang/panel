@@ -1,0 +1,27 @@
+# Preliminary data, someone please PR a full set!!
+
+Categories = [
+    "Music",
+    "Podcast"
+]
+
+Genres = [
+    # Music
+    "Top 40",
+    "Pop",
+    "Rap",
+    "Hip-Hop",
+    "Jazz",
+    "Anime",
+    # Podcast
+    "Politics"
+]
+
+Countries = [
+    "US",
+    "UK",
+    "Spain",
+    "Germany",
+    "Europe (English)",
+    "Europe (Other)",
+]

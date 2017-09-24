@@ -21,6 +21,7 @@ func (handler *Handler) ViewCreate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	utils.AddAuthContext(session, ctx, handler.Config)
+	utils.AddMetaContext(ctx, handler.Meta)
 
 	radio := api.Radio{}
 	radio.State = "ESCROW"
