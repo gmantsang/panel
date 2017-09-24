@@ -38,7 +38,7 @@ func (handler *Handler) ViewList(w http.ResponseWriter, r *http.Request) {
 	req, _ := http.NewRequest(http.MethodGet, url, nil)
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		http.Error(w, utils.APIError(err), http.StatusInternalServerError)
+		http.Error(w, utils.APIError(err, resp), http.StatusInternalServerError)
 		return
 	}
 

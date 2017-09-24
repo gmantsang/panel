@@ -19,8 +19,8 @@ func (handler *Handler) ViewEdit(w http.ResponseWriter, r *http.Request) {
 	url := utils.GetRadioURL(handler.Config.APIUrl, name)
 	req, _ := http.NewRequest("GET", url, nil)
 	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		http.Error(w, utils.APIError(err), http.StatusInternalServerError)
+	if err != nil || resp.StatusCode != http.StatusOK {
+		http.Error(w, utils.APIError(err, resp), http.StatusInternalServerError)
 		return
 	}
 
@@ -85,11 +85,7 @@ func (handler *Handler) Edit(w http.ResponseWriter, r *http.Request) {
 	req.Header.Set("Content-Type", "application/json")
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		http.Error(w, utils.APIError(err), http.StatusInternalServerError)
-		return
-	}
-	if resp.StatusCode != http.StatusOK {
-		http.Error(w, utils.APIError(err), http.StatusInternalServerError)
+		http.Error(w, utils.APIError(err, resp), http.StatusInternalServerError)
 		return
 	}
 

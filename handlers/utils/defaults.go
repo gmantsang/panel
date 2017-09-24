@@ -1,6 +1,8 @@
 package utils
 
 import "fmt"
+import "net/http"
+import "io/ioutil"
 
 const (
 	templateFailedFormat      = "Template failed to compile: %s"
@@ -53,8 +55,19 @@ func JSONError(e error) string {
 }
 
 // APIError is returned when the dab-radio API returns an error
-func APIError(e error) string {
-	return fmt.Sprintf(apiErrorFormat, e)
+func APIError(e error, resp *http.Response) string {
+	if e != nil {
+		return fmt.Sprintf(apiErrorFormat, e)
+	}
+	if resp == nil {
+		return "unknown error"
+	}
+	body, _ := ioutil.ReadAll(resp.Body)
+	if string(body) != "" {
+		return fmt.Sprintf("%s: %s", resp.Status, string(body))
+	}
+	return resp.Status
+
 }
 
 // DiscordAuthURL returns the authentication URL

@@ -12,6 +12,7 @@ func AddAuthContext(session *sessions.Session, ctx pongo2.Context, conf config.C
 		ctx["authed"] = true
 		ctx["username"] = session.Values["username"]
 		ctx["discrim"] = session.Values["discrim"]
+		ctx["id"] = session.Values["id"]
 		ctx["admin"] = isAdmin(session.Values["id"], conf)
 	}
 }

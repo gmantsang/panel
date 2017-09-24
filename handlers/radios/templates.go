@@ -4,8 +4,9 @@ import "github.com/flosch/pongo2"
 
 // Templates contains the templates for radios
 type Templates struct {
-	List *pongo2.Template
-	Edit *pongo2.Template
+	List    *pongo2.Template
+	Edit    *pongo2.Template
+	Confirm *pongo2.Template
 }
 
 // CompileTemplates builds the pongo2 templates for radios
@@ -20,8 +21,14 @@ func CompileTemplates() (*Templates, error) {
 		return nil, err
 	}
 
+	confirm, err := pongo2.FromFile("templates/radio/confirm.html")
+	if err != nil {
+		return nil, err
+	}
+
 	return &Templates{
-		List: list,
-		Edit: edit,
+		List:    list,
+		Edit:    edit,
+		Confirm: confirm,
 	}, nil
 }

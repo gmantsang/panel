@@ -9,22 +9,31 @@ import (
 
 // AuthorizedMiddleware protects a route that requires authentication
 type AuthorizedMiddleware struct {
-	MinLevel int
-	Store    sessions.Store
-	Handler  http.Handler
-	Config   config.Config
+	MinLevel    int
+	Form        bool
+	Store       sessions.Store
+	Handler     *http.Handler
+	HandlerFunc func(w http.ResponseWriter, r *http.Request)
+	Config      config.Config
 }
 
 func (middleware *AuthorizedMiddleware) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	session, err := middleware.Store.Get(r, SessionName)
-	if err != nil {
-		http.Error(w, SessionFailed(err), http.StatusInternalServerError)
-		return
-	}
+	var id interface{}
+	if !middleware.Form {
+		session, err := middleware.Store.Get(r, SessionName)
+		if err != nil {
+			http.Error(w, SessionFailed(err), http.StatusInternalServerError)
+			return
+		}
 
-	id := session.Values["id"]
-	if id == "" {
-		http.Error(w, NotAuthorized, http.StatusForbidden)
+		id = session.Values["id"]
+		if id == "" {
+			http.Error(w, NotAuthorized, http.StatusForbidden)
+			return
+		}
+	} else if middleware.Form {
+		r.ParseForm()
+		id = r.Form.Get("id")
 	}
 
 	var permission *config.Permission
@@ -35,10 +44,16 @@ func (middleware *AuthorizedMiddleware) ServeHTTP(w http.ResponseWriter, r *http
 	}
 	if permission == nil {
 		http.Error(w, NotAuthorized, http.StatusForbidden)
+		return
 	}
 	if permission.Level < middleware.MinLevel {
 		http.Error(w, NotAuthorized, http.StatusForbidden)
+		return
 	}
 
-	middleware.Handler.ServeHTTP(w, r)
+	if middleware.Handler != nil {
+		(*middleware.Handler).ServeHTTP(w, r)
+		return
+	}
+	middleware.HandlerFunc(w, r)
 }

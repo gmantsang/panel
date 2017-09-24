@@ -1,0 +1,19 @@
+{% extends "../base.html" %}
+{% block title %}Confirm Change?{% endblock %}
+{% block content %}
+<div class="container has-text-centered">
+    <h1 class="subtitle">Are you sure?</h1>
+    <h3>This action will flag {{name}} as: {{action}}.</h3>
+    <div class="columns">
+        <div class="column is-4 is-offset-4">
+            <form method="POST" action="/radios/{{action}}/{{name}}">
+                <input class="button is-success" type="submit" value="Yes">
+                <input type="hidden" name="id" value="{{id}}">
+            </form>
+        </div>
+        <div class="column is-4 is-offset-8">
+            <a class="button is-danger" href="/radios/list/valid">Cancel</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
