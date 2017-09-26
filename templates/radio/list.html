@@ -32,11 +32,9 @@
                     {% if radio.State == "VALID" %}
                     <a href="/radios/break/{{radio.Name}}" class="is-warning"><i class="fa fa-flag"></i></a>
                     {% elif radio.State == "ESCROW" %}
-                        <a href="javascript:{}" 
-                        onclick="var e = document.getElementById('escrow');
-                            e.action='/radios/valid/{{radio.Name}}'; 
-                            e.submit()" class="is-success">
-                            <i class="fa fa-thumbs-up"></i></a>             
+                        <a href="javascript:{}" onclick="valid('{{radio.Name}}');" class="is-success">
+                            <i class="fa fa-thumbs-up"></i>
+                        </a>             
                     {% endif %}
                     <a href="/radios/delete/{{radio.Name}}" class="is-danger"><i class="fa fa-trash"></i></a>
                 {% endif %}
@@ -56,5 +54,12 @@
 <form method="GET" id="escrow">
     <input type="hidden" name="id" value="{{id}}">
 </form>
+<script>
+    function valid(name) {
+        var form = document.getElementById('escrow');
+        form.setAttribute('action', '/radios/valid/' + name);
+        form.submit();
+    }
+</script>
 {% endif %}
 {% endblock %}

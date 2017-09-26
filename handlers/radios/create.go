@@ -25,11 +25,6 @@ func (handler *Handler) ViewCreate(w http.ResponseWriter, r *http.Request) {
 
 	radio := api.Radio{}
 	radio.State = "ESCROW"
-	/*data, err := json.Marshal(radio)
-	if err != nil {
-		http.Error(w, utils.JSONError(err), http.StatusInternalServerError)
-		return
-	}*/
 	ctx["radio"] = radio
 
 	err = handler.Templates.Edit.ExecuteWriter(ctx, w)

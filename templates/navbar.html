@@ -12,8 +12,10 @@
                 <a class="navbar-item" href="/radios/list/valid">Valid</a>
                 <a class="navbar-item" href="/radios/list/escrow">Escrow</a>
                 <a class="navbar-item" href="/radios/list/broken">Broken</a>
+                {% if authed %}
                 <hr />
                 <a class="navbar-item" href="/radios/create/"><i class="fa fa-plus"></i>&nbsp;Add Radio</a>
+                {% endif %}
             </div>
         </div>
         
