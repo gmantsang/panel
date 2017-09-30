@@ -18,22 +18,16 @@ type AuthorizedMiddleware struct {
 }
 
 func (middleware *AuthorizedMiddleware) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	var id interface{}
-	if !middleware.Form {
-		session, err := middleware.Store.Get(r, SessionName)
-		if err != nil {
-			http.Error(w, SessionFailed(err), http.StatusInternalServerError)
-			return
-		}
+	session, err := middleware.Store.Get(r, SessionName)
+	if err != nil {
+		http.Error(w, SessionFailed(err), http.StatusInternalServerError)
+		return
+	}
 
-		id = session.Values["id"]
-		if id == "" {
-			http.Error(w, NotAuthorized, http.StatusForbidden)
-			return
-		}
-	} else if middleware.Form {
-		r.ParseForm()
-		id = r.Form.Get("id")
+	id := session.Values["id"]
+	if id == "" {
+		http.Error(w, NotAuthorized, http.StatusForbidden)
+		return
 	}
 
 	var permission *config.Permission

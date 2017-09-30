@@ -26,43 +26,43 @@ func (handler *Handler) BuildRouter(router *mux.Router) {
 	r.HandleFunc("/edit/{name}", handler.ViewEdit).
 		Methods(http.MethodGet)
 	r.Handle("/edit/{name}", &utils.AuthorizedMiddleware{
+		Store:       handler.Store,
 		Config:      handler.Config,
 		MinLevel:    5,
-		Form:        true,
 		HandlerFunc: handler.Edit,
 	}).Methods(http.MethodPost)
 
 	r.HandleFunc("/create/", handler.ViewCreate).
 		Methods(http.MethodGet)
 	r.Handle("/create/", &utils.AuthorizedMiddleware{
+		Store:       handler.Store,
 		Config:      handler.Config,
 		MinLevel:    5,
-		Form:        true,
 		HandlerFunc: handler.Create,
 	}).Methods(http.MethodPost)
 
 	r.HandleFunc("/delete/{name}", handler.ViewDelete).
 		Methods(http.MethodGet)
 	r.Handle("/delete/{name}", &utils.AuthorizedMiddleware{
+		Store:       handler.Store,
 		Config:      handler.Config,
 		MinLevel:    10,
-		Form:        true,
 		HandlerFunc: handler.Delete,
 	}).Methods(http.MethodPost)
 
 	r.HandleFunc("/break/{name}", handler.ViewBreak).
 		Methods(http.MethodGet)
 	r.Handle("/break/{name}", &utils.AuthorizedMiddleware{
+		Store:       handler.Store,
 		Config:      handler.Config,
 		MinLevel:    10,
-		Form:        true,
 		HandlerFunc: handler.Break,
 	}).Methods(http.MethodPost)
 
 	r.Handle("/valid/{name}", &utils.AuthorizedMiddleware{
+		Store:       handler.Store,
 		Config:      handler.Config,
 		MinLevel:    10,
-		Form:        true,
 		HandlerFunc: handler.Valid,
 	})
 }
