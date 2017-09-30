@@ -18,6 +18,18 @@
                 {% endif %}
             </div>
         </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">Shards</a>
+
+            <div class="navbar-dropdown">
+                <a class="navbar-item" href="/shards/list">List</a>
+                {% if authed %}
+                <hr />
+                <a class="navbar-item" href="/shards/report"><i class="fa fa-plus"></i>&nbsp;Report</a>
+                {% endif %}
+            </div>
+        </div>
         
         <div class="navbar-end">
             {% if authed %}

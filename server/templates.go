@@ -1,6 +1,10 @@
 package server
 
-import "github.com/flosch/pongo2"
+import (
+	"github.com/flosch/pongo2"
+	// Imports additional filters for pongo2
+	_ "github.com/flosch/pongo2-addons"
+)
 
 // Templates holds compiled templates for this app
 type Templates struct {

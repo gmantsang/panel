@@ -11,6 +11,7 @@ type (
 		ClientSecret string
 		Permissions  []Permission
 		Debug        bool
+		WebhookURL   string
 	}
 
 	// Permission represents the permission levels for a user

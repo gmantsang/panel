@@ -4,6 +4,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/dabbotorg/panel/handlers/shards"
+
 	"github.com/dabbotorg/panel/config"
 	"github.com/dabbotorg/panel/handlers"
 	"github.com/dabbotorg/panel/handlers/auth"
@@ -49,6 +51,20 @@ func BuildRouter(r *mux.Router, c config.Config, m config.Metadata) error {
 	}
 	radioHandler.BuildRouter(r)
 
+	shardTemplates, err := shards.CompileTemplates()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	shardHandler := &shards.Handler{
+		Store:        store,
+		Config:       c,
+		Meta:         m,
+		Templates:    shardTemplates,
+		ShardStore:   make([]shards.Shard, 0),
+		ShardCounter: 0,
+	}
+	shardHandler.BuildRouter(r)
+
 	if c.Debug {
 		r.HandleFunc("/compile", func(w http.ResponseWriter, r *http.Request) {
 			radioTemplates, err = radios.CompileTemplates()
@@ -57,6 +73,11 @@ func BuildRouter(r *mux.Router, c config.Config, m config.Metadata) error {
 				return
 			}
 			radioHandler.Templates = radioTemplates
+			shardTemplates, err := shards.CompileTemplates()
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+			shardHandler.Templates = shardTemplates
 		})
 	}
 

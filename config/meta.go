@@ -5,4 +5,5 @@ type Metadata struct {
 	Categories []string
 	Genres     []string
 	Countries  []string
+	Bots       []string
 }

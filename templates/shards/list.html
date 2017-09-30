@@ -1,0 +1,37 @@
+{% extends "../base.html" %}
+{% block title %}Shards - Broken{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="columns">
+        <div class="column is-three-quarters">
+            <h1 class="title">Broken Shards</h1>
+        </div>
+        <div class="column">
+            <a class="button" href="/shards/report">Report Shard</a>
+        </div>
+    </div>
+    <div class="columns is-multiline">
+        {% for shard in shards %}
+        <div class="column is-one-third">
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">
+                        {{shard.Bot | upper}}
+                    </p>
+                </header>
+                <div class="card-content">
+                    Shard <code>{{shard.Number}}</code>
+                    <br>
+                    Reported <time>{{shard.Timestamp | timesince}}</time>
+                </div>
+                {% if admin %}
+                <footer class="card-footer">
+                    <a href="/shards/fix/{{shard.ID}}" class="card-footer-item">Mark Fixed</a>
+                </footer>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -25,3 +25,10 @@ Countries = [
     "Europe (English)",
     "Europe (Other)",
 ]
+
+# Bots used for Shard Reporting
+Bots = [
+    "Main",
+    "Patron 1",
+    "Patron 2",
+]

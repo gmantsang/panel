@@ -1,0 +1,24 @@
+{% extends "../base.html" %}
+{% block title %}Shards - Report{% endblock %}
+{% block content %}
+<form method="POST" action="/shards/report" class="container">
+    <div class="field">
+        <label class="label">Bot</label>
+        <div class="select">
+            <select class="select" name="Bot">
+                {% for bot in bots %}
+                <option value="{{bot}}">{{bot}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Shard</label>
+        <div class="control">
+            <input type="number" class="input" name="Number">
+        </div>
+    </div>
+    <input type="hidden" name="id" value="{{id}}">
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}
