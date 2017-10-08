@@ -34,6 +34,7 @@ func (middleware *AuthorizedMiddleware) ServeHTTP(w http.ResponseWriter, r *http
 	for _, perm := range middleware.Config.Permissions {
 		if id == perm.ID {
 			permission = &perm
+			break
 		}
 	}
 	if permission == nil {
