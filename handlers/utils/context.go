@@ -26,6 +26,7 @@ func isAdmin(id interface{}, conf config.Config) bool {
 	for _, perm := range conf.Permissions {
 		if id == perm.ID {
 			permission = &perm
+			break
 		}
 	}
 	if permission == nil {
