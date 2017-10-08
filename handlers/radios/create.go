@@ -42,6 +42,9 @@ func (handler *Handler) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	radio := parseForm(r)
+	if radio.State == "" {
+		radio.State = "ESCROW"
+	}
 	ok, reason := isValid(radio)
 	if !ok {
 		http.Error(w, reason, http.StatusBadRequest)
