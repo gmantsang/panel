@@ -14,10 +14,12 @@ Genres = [
     "Jazz",
     "Anime",
     # Podcast
+    "Talk"
     "Politics"
 ]
 
 Countries = [
+    "CAN"
     "US",
     "UK",
     "Spain",
